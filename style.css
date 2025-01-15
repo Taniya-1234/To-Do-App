@@ -1,0 +1,44 @@
+*{
+    text-align: center;
+    background-color:#F9F9F9;
+}
+
+.taskAdd{
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    width: 100%;
+}
+
+#input{
+    height: 30px;
+    width: 275px;
+    margin-right: 4px;
+}
+
+#add{
+    height: 35.2px;
+    width : 50px;
+    background-color: rgb(195, 224, 195);
+}
+
+.taskShow{
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+    margin: 50px;
+}
+
+#delete{
+    margin-left: 40px;
+    background-color: rgb(250, 163, 163);
+}
+
+li{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    width: 300px;
+    font-size: 20px;
+    padding: 0px;
+    margin: 15px;
+}
