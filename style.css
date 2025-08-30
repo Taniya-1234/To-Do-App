@@ -42,3 +42,8 @@ li{
     padding: 0px;
     margin: 15px;
 }
+
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
