@@ -33,3 +33,12 @@ ul.addEventListener("click",function(event){
         event.target.parentElement.remove();
     }
 })
+
+
+
+ul.addEventListener("click",function(event){
+    if(event.target.nodeName == "BUTTON"){
+        event.target.parentElement.remove();
+    }
+
+})
