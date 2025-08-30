@@ -1,21 +1,65 @@
-let inp = document.querySelector("input");
+let inp = document.querySelector("#input");
 let btn = document.querySelector("#add");
 let ul = document.querySelector("ul");
 
+// Store tasks as objects: { text: "Task name", completed: false }
+let tasks = [];
 
-btn.addEventListener("click",()=>{
+// Load tasks from localStorage on page load
+window.onload = function () {
+    let storedTasks = localStorage.getItem("tasks");
+    if (storedTasks) {
+        tasks = JSON.parse(storedTasks);
+        tasks.forEach(task => addTaskToDOM(task));
+    }
+};
 
-    let text = inp.value;
-    if (text.trim() === "") {
+// Save tasks to localStorage
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+// Add new task
+btn.addEventListener("click", () => {
+    let text = inp.value.trim();
+    if (text === "") {
         alert("Please enter a task before adding!");
         return;
     }
 
+    let task = { text: text, completed: false };
+    tasks.push(task);
+    addTaskToDOM(task);
+    saveTasks();
+
+    inp.value = "";
+});
+
+// Add task to DOM
+function addTaskToDOM(task) {
     let li = document.createElement("li");
-    ul.append(li);
-    li.innerText = text;
+    li.innerText = task.text;
 
+    // Apply completed style if task.completed is true
+    if (task.completed) {
+        li.style.textDecoration = "line-through";
+        li.style.color = "gray";
+    }
 
+    // Toggle completed on click
+    li.addEventListener("click", function () {
+        task.completed = !task.completed;
+        if (task.completed) {
+            li.style.textDecoration = "line-through";
+            li.style.color = "gray";
+        } else {
+            li.style.textDecoration = "none";
+            li.style.color = "black";
+        }
+        saveTasks();
+    });
+
+    // Delete button
     let deleteBtn = document.createElement("button");
     deleteBtn.innerText = "Delete Task";
     deleteBtn.classList.add("delete");
@@ -23,22 +67,12 @@ btn.addEventListener("click",()=>{
     deleteBtn.style.marginLeft = "40px";
     li.append(deleteBtn);
 
-    inp.value = "";
-})
+    deleteBtn.addEventListener("click", function (event) {
+        event.stopPropagation(); // prevent strike toggle
+        ul.removeChild(li);
+        tasks = tasks.filter(t => t !== task);
+        saveTasks();
+    });
 
-
-
-ul.addEventListener("click",function(event){
-    if(event.target.nodeName == "BUTTON"){
-        event.target.parentElement.remove();
-    }
-})
-
-
-
-ul.addEventListener("click",function(event){
-    if(event.target.nodeName == "BUTTON"){
-        event.target.parentElement.remove();
-    }
-
-})
+    ul.append(li);
+}
